@@ -7,12 +7,12 @@ import ru.practicum.stats.entity.Hit;
 @Component
 public class HitMapper {
 
-  public Hit toHit(HitDto dto) {
-    return Hit.builder()
-        .app(dto.getApp())
-        .ip(dto.getIp())
-        .uri(dto.getUri())
-        .timestamp(dto.getRequestDateTime())
-        .build();
-  }
+    public Hit toHit(HitDto dto) {
+        return Hit.builder()
+                .app(dto.getApp())
+                .ip(dto.getIp())
+                .uri(dto.getUri())
+                .timestamp(dto.getRequestDateTime())
+                .build();
+    }
 }
