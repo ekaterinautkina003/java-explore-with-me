@@ -8,11 +8,11 @@ import org.springframework.web.client.RestTemplate;
 import java.util.List;
 import java.util.Map;
 
-public class Client {
+public class RestClient {
 
     protected final RestTemplate rest;
 
-    public Client(RestTemplate rest) {
+    public RestClient(RestTemplate rest) {
         this.rest = rest;
     }
 
@@ -20,22 +20,19 @@ public class Client {
         if (response.getStatusCode().is2xxSuccessful()) {
             return response;
         }
-
         ResponseEntity.BodyBuilder responseBuilder = ResponseEntity.status(response.getStatusCode());
-
         if (response.hasBody()) {
             return responseBuilder.body(response.getBody());
         }
-
         return responseBuilder.build();
     }
 
-    protected <T> ResponseEntity<Object> request(
+    public <T> ResponseEntity<Object> request(
             HttpMethod method, String path,
             @Nullable Map<String, Object> parameters,
             @Nullable T body
     ) {
-        HttpEntity<T> requestEntity = new HttpEntity<>(body, defaultHeaders());
+        HttpEntity<T> requestEntity = new HttpEntity<>(body, headers());
 
         ResponseEntity<Object> response;
         try {
@@ -50,7 +47,7 @@ public class Client {
         return response(response);
     }
 
-    private HttpHeaders defaultHeaders() {
+    private HttpHeaders headers() {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
         headers.setAccept(List.of(MediaType.APPLICATION_JSON));
