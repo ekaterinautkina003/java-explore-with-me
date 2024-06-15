@@ -7,4 +7,5 @@ public class ApplicationConstant {
     public static final String REQUEST_NAME = "Request";
     public static final String EVENT_NAME = "Event";
     public static final String USER_NAME = "User";
+    public static final String COMMENT_NAME = "Comment";
 }

@@ -8,6 +8,9 @@ import ru.practicum.model.dto.*;
 import ru.practicum.model.entity.Category;
 import ru.practicum.model.entity.Event;
 
+import java.util.Collections;
+import java.util.stream.Collectors;
+
 @Component
 public class EventMapper {
 
@@ -49,6 +52,13 @@ public class EventMapper {
                 .state(event.getState().name())
                 .title(event.getTitle())
                 .views(event.getViews())
+                .comments(
+                        event.getComments() == null
+                                ? Collections.emptyList()
+                                : event.getComments()
+                                .stream()
+                                .map(it -> modelMapper.map(it, CommentDto.class))
+                                .collect(Collectors.toList()))
                 .build();
     }
 
