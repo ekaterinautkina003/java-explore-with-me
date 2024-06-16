@@ -25,7 +25,7 @@ public class AdminEventController {
     private final CommentService commentService;
 
     @GetMapping
-    List<EventFullDto> findEvents(
+    public List<EventFullDto> findEvents(
             @RequestParam(required = false) List<Long> users,
             @RequestParam(required = false) List<String> states,
             @RequestParam(required = false) List<Long> categories,
@@ -38,7 +38,7 @@ public class AdminEventController {
     }
 
     @PatchMapping("/{eventId}")
-    EventFullDto updateEvent(
+    public EventFullDto updateEvent(
             @PathVariable Long eventId,
             @Valid @RequestBody UpdateEventAdminRequestDto body
     ) {
@@ -47,7 +47,7 @@ public class AdminEventController {
 
     @DeleteMapping("/{eventId}/comment/{commentId}/delete")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    void delete(@PathVariable Long eventId, @PathVariable Long commentId) {
+    public void delete(@PathVariable Long eventId, @PathVariable Long commentId) {
         commentService.delete(eventId, commentId);
     }
 }
