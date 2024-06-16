@@ -5,6 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import ru.practicum.model.dto.*;
+import ru.practicum.service.CommentService;
 import ru.practicum.service.EventService;
 import ru.practicum.service.RequestService;
 
@@ -20,6 +21,7 @@ public class PrivateEventController {
 
     private final EventService eventService;
     private final RequestService requestService;
+    private final CommentService commentService;
 
     @GetMapping("/{userId}/events")
     public List<EventShortDto> find(
@@ -59,5 +61,25 @@ public class PrivateEventController {
                                                  @Valid @RequestBody EventRequestStatusUpdateRequest body
     ) {
         return requestService.updateRequestsByUserEvent(userId, eventId, body);
+    }
+
+    @PostMapping("/{userId}/events/{eventId}/comment")
+    @ResponseStatus(HttpStatus.CREATED)
+    public CommentDto create(
+            @PathVariable("userId") Long userId,
+            @PathVariable("eventId") Long eventId,
+            @Valid @RequestBody CreateCommentDto comment
+    ) {
+        return commentService.create(userId, eventId, comment);
+    }
+
+    @PatchMapping("/{userId}/events/{eventId}/comment/{commentId}")
+    public CommentDto update(
+            @PathVariable("userId") Long userId,
+            @PathVariable("eventId") Long eventId,
+            @PathVariable("commentId") Long commentId,
+            @Valid @RequestBody CreateCommentDto comment
+    ) {
+        return commentService.update(userId, eventId, commentId, comment);
     }
 }
